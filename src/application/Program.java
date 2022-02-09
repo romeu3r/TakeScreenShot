@@ -10,12 +10,11 @@ public class Program {
 
     public static void main(String[] args) {
         getNameSelfClass();
-        firstTimePrint("c://temp", "First print.jpg");
+        firstTimePrint("c://temp", getNameSelfClass() + ".jpg");
     }
 
-    static void getNameSelfClass() {
-        String test = Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println(test);
+    static String getNameSelfClass() {
+        return Thread.currentThread().getStackTrace()[2].getMethodName();
     }
 
     static void firstTimePrint(String path, String fileName) {
@@ -23,13 +22,12 @@ public class Program {
             Robot robot = new Robot();
             int x = Toolkit.getDefaultToolkit().getScreenSize().width;
             int y = Toolkit.getDefaultToolkit().getScreenSize().height;
-            /*Create Folders*/ boolean destiny = new File(path).mkdirs();
+            /*Create Folders*/
+            boolean destiny = new File(path).mkdirs();
             File file = new File(path + File.separator + fileName);
             BufferedImage bi = robot.createScreenCapture(new Rectangle(x, y));
             ImageIO.write(bi, "jpg", file);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
